@@ -35,6 +35,21 @@ const App = () => {
     setTodos((prev) => prev.filter((item, i) => i !== index));
   };
 
+  const editItem = (index) => {
+    setTodos((prev) =>
+      prev.map((item, i) => {
+        if (i === index) {
+          return {
+            title: `${item.title}  duzenlendi`,
+            isEdited: true,
+          };
+        }
+
+        return item;
+      })
+    );
+  };
+
   return (
     <div style={{ padding: 20 }}>
       <div style={{ display: "flex", gap: 20, marginBottom: 20 }}>
@@ -71,6 +86,18 @@ const App = () => {
               }}
             >
               {todo.title}
+              <button
+                disabled={todo.isEdited}
+                style={{
+                  backgroundColor: "blue",
+                  color: "white",
+                  padding: 5,
+                  opacity: todo.isEdited ? 0.2 : 1,
+                }}
+                onClick={() => editItem(index)}
+              >
+                Duzenle
+              </button>
               <button
                 style={{ backgroundColor: "red", color: "white", padding: 5 }}
                 onClick={() => removeItem(index)}
