@@ -1,13 +1,42 @@
 import * as React from "react";
+import { Container, AppBar, Toolbar, Typography } from "@mui/material";
+
+import TodoList from "./components/TodoList";
+import { TodosContext } from "./context";
 
 const App = () => {
-  const [number, setNumber] = React.useState(0);
+  const [todos, setTodos] = React.useState([
+    {
+      title: "Todo 1",
+    },
+    {
+      title: "Todo 2",
+    },
+    {
+      title: "Todo 3",
+    },
+    {
+      title: "Todo 4",
+    },
+  ]);
 
-  const arttir = () => {
-    setNumber(number + 1);
-  };
+  return (
+    <>
+      <AppBar position="fixed">
+        <Toolbar>
+          <Typography variant="h6">Todo List App</Typography>
+        </Toolbar>
+      </AppBar>
 
-  return <div>Vitejs Anasayfa</div>;
+      <Container
+        sx={{ pt: "64px", display: "flex", flexDirection: "column", gap: 2 }}
+      >
+        <TodosContext.Provider value={{ todos, setTodos, name: "Berk" }}>
+          <TodoList />
+        </TodosContext.Provider>
+      </Container>
+    </>
+  );
 };
 
 export default App;
