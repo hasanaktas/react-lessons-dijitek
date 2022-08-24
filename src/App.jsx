@@ -1,41 +1,38 @@
 import * as React from "react";
-import { Container, AppBar, Toolbar, Typography } from "@mui/material";
-
-import TodoList from "./components/TodoList";
-import { TodosContext } from "./context";
+import {
+  Container,
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
+import axios from "axios";
+import { restCountriesApi } from "./utils";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { countriesAtom } from "./store/countries";
+import CountryList from "./components/CountryList";
 
 const App = () => {
-  const [todos, setTodos] = React.useState([
-    {
-      title: "Todo 1",
-    },
-    {
-      title: "Todo 2",
-    },
-    {
-      title: "Todo 3",
-    },
-    {
-      title: "Todo 4",
-    },
-  ]);
+  const setCountries = useSetRecoilState(countriesAtom);
+
+  React.useEffect(() => {
+    getCountries();
+  }, []);
+
+  const getCountries = async () => {
+    const { data } = await restCountriesApi.get("/v3.1/all");
+
+    setCountries(data);
+  };
 
   return (
-    <>
-      <AppBar position="fixed">
-        <Toolbar>
-          <Typography variant="h6">Todo List App</Typography>
-        </Toolbar>
-      </AppBar>
-
-      <Container
-        sx={{ pt: "64px", display: "flex", flexDirection: "column", gap: 2 }}
-      >
-        <TodosContext.Provider value={{ todos, setTodos, name: "Berk" }}>
-          <TodoList />
-        </TodosContext.Provider>
-      </Container>
-    </>
+    <Container sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
+      <CountryList />
+    </Container>
   );
 };
 

@@ -1,10 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
+import { RecoilRoot } from "recoil";
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <>
-    <CssBaseline />
-    <App />
-  </>
+  <RecoilRoot>
+    <Box sx={{ bgcolor: "rgb(240,240,240)" }}>
+      <CssBaseline />
+      <App />
+    </Box>
+  </RecoilRoot>
 );
